@@ -7,9 +7,11 @@ import android.util.Log;
 import android.view.View;
 
 import m.project.test.MyApp;
+import m.project.test.Network.TranslateServer.ListenerRequestTranslate;
+import m.project.test.Network.TranslateServer.ResponseTranslate;
 import m.project.test.R;
 
-public class Register extends AppCompatActivity {
+public class Register extends AppCompatActivity implements ListenerRequestTranslate {
     private String TAG = "Register";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,5 +48,13 @@ public class Register extends AppCompatActivity {
     public void goRegister(View view){
         Log.i(TAG, "In submit");
         finish();
+    }
+
+    @Override
+    public void getResultCommand(ResponseTranslate response) {
+        if(response.isError()) return;
+        if(response.getCommand().equals("cancel")){
+            finish();
+        }
     }
 }

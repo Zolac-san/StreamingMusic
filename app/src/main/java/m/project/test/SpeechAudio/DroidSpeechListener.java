@@ -24,6 +24,8 @@ public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListene
     private DroidSpeechListener(){
         droidSpeech = new DroidSpeech(MyApp.getAppContext(), null);
         droidSpeech.setOnDroidSpeechListener(this);
+
+        Log.i(TAG,"Start reco");
         droidSpeech.startDroidSpeechRecognition();
     }
 
@@ -68,12 +70,26 @@ public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListene
 
     @Override
     public void onDroidSpeechError(String errorMsg) {
-
+        Log.i(TAG,"Error droid speech: " + errorMsg);
     }
 
 
     @Override
     public void onDroidSpeechAudioPermissionStatus(boolean audioPermissionGiven, String errorMsgIfAny) {
         Log.i(TAG, "audio permi  = " + audioPermissionGiven);
+    }
+
+    public void launch(){
+        droidSpeech.startDroidSpeechRecognition();
+    }
+
+    public void stop(){
+        droidSpeech.closeDroidSpeechOperations();
+    }
+
+    public void restart(){
+        stop();
+        launch();
+        //instance = new DroidSpeechListener();
     }
 }

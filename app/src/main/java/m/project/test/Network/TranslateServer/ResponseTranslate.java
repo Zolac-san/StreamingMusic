@@ -1,5 +1,8 @@
 package m.project.test.Network.TranslateServer;
 
+import android.util.Log;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -46,24 +49,31 @@ public class ResponseTranslate {
 
     public ResponseTranslate(JSONObject obj){
         this();
+        Log.i("Object ", "create via object");
         try {
             if (obj.has("error")) {
                 this.error = (boolean) obj.get("error");
                 if (!this.error && obj.has("command")) {
                     this.command = (String) obj.get("command");
-                    if (this.command == "jouer" && obj.has("foundMusic")){
+                    Log.i("finish : ",this.command);
+                    Log.i("finish : ",(obj.has("foundMusic")?"true":"false"));
+                    if (this.command.equals("jouer")  && obj.has("foundMusic")){
                         this.foundMusic = (boolean) obj.get("foundMusic");
+                        Log.i("found Music : ",( this.foundMusic ?"true":"false"));
                         if(this.foundMusic){
                             this.title = (String) obj.get("title");
-                            this.album = (String) obj.get("album");
-                            for(Object o : (Object[])obj.get("authors")){
-                                this.addAuthor((String) o);
+
+                            JSONArray listAuthors =obj.getJSONArray("authors");
+                            for(int i=0; i<listAuthors.length();i++ ){
+                                this.addAuthor( listAuthors.getString(i));
                             }
                         }
                     }
                 }
             }
+            Log.i("Object finish : ",this.toString());
         }catch(Exception e){
+            Log.i("Object ", "Error create via object");
             System.err.println("Error on create object : "+ e.getMessage());
         }
     }
@@ -127,7 +137,7 @@ public class ResponseTranslate {
 
     @Override
     public String toString() {
-        return "ResponseTranslate{" +
+        return "ResponseTranslate {" +
                 "error=" + error +
                 ", command='" + command + '\'' +
                 ", foundMusic=" + foundMusic +

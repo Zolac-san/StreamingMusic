@@ -8,9 +8,11 @@ import android.view.View;
 
 import m.project.test.MainActivity;
 import m.project.test.MyApp;
+import m.project.test.Network.TranslateServer.ListenerRequestTranslate;
+import m.project.test.Network.TranslateServer.ResponseTranslate;
 import m.project.test.R;
 
-public class Login extends AppCompatActivity {
+public class Login extends AppCompatActivity implements ListenerRequestTranslate {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +46,30 @@ public class Login extends AppCompatActivity {
     }
 
     public void goOnMainActivity(View view){
+        moveOnMainActivity();
+    }
+
+    public void goOnRegister(View view){
+        moveOnRegister();
+    }
+
+    private void moveOnMainActivity(){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
 
-    public void goOnRegister(View view){
+    private void moveOnRegister(){
         Intent intent = new Intent(getApplicationContext(), Register.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void getResultCommand(ResponseTranslate response) {
+        if(response.isError()) return;
+        if(response.getCommand().equals("login")){
+            moveOnMainActivity();
+        }else if(response.getCommand().equals("register")){
+            moveOnRegister();
+        }
     }
 }
