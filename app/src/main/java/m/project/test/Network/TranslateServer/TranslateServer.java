@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import m.project.test.MyApp;
+import m.project.test.Network.QueueServerRequest;
 
 public class TranslateServer {
 
@@ -28,7 +29,7 @@ public class TranslateServer {
     private RequestQueue requestQueue;
 
     private TranslateServer(){
-        requestQueue = Volley.newRequestQueue(MyApp.getAppContext());
+
     }
 
     public static synchronized TranslateServer getInstance()
@@ -69,6 +70,7 @@ public class TranslateServer {
                     }
                  });
         // Add the request to the RequestQueue.
-        requestQueue.add(request);
+        QueueServerRequest.getInstance().addRequest(request);
+
     }
 }

@@ -55,6 +55,8 @@ public class MyApp extends Application {
     public static void setCurrentActivity(Activity currentActivity) {
         MyApp.currentActivity = currentActivity;
     }
+    public void onClose(){
 
+    }
 
 }
