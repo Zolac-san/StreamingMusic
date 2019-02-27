@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,19 +26,24 @@ import java.util.Random;
 import m.project.test.Network.TranslateServer.ListenerRequestTranslate;
 import m.project.test.Network.TranslateServer.ResponseTranslate;
 import m.project.test.Settings.SettingsActivity;
+import m.project.test.SpeechAudio.ListenerLiveAudioResult;
 
-public class MainActivity extends AppCompatActivity implements ListenerRequestTranslate {
+public class MainActivity extends AppCompatActivity implements ListenerRequestTranslate, ListenerLiveAudioResult {
 
     public final String TAG = "MainActivity";
     private TextView resultVoiceText;
     private Button btnStart,btnStop;
+    Animation animateRotateClockwise;
+    ImageView circleLogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         resultVoiceText = findViewById(R.id.ResultVoiceText);
-
+        circleLogo = (ImageView)findViewById(R.id.circle_logo);
+        animateRotateClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_clockwise);
     }
 
     @Override
@@ -77,8 +84,6 @@ public class MainActivity extends AppCompatActivity implements ListenerRequestTr
         if (response.getCommand().equals("setting")){
             Log.i(TAG,"it's a setting action");
             if(!response.isError()) {
-
-
                 moveOnSettings();
             }else {
                 //error find
@@ -86,5 +91,14 @@ public class MainActivity extends AppCompatActivity implements ListenerRequestTr
             }
         }
         resultVoiceText.setText(response.toString());
+        //circleLogo.getAnimation().cancel();
+        circleLogo.clearAnimation();
+
+    }
+
+    @Override
+    public void getLiveAudioResult(String liveSpeechResult) {
+        if(circleLogo.getAnimation() == null || circleLogo.getAnimation().hasEnded())
+            circleLogo.startAnimation(animateRotateClockwise);
     }
 }

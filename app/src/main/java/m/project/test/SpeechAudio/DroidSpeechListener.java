@@ -47,11 +47,20 @@ public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListene
 
     @Override
     public void onDroidSpeechRmsChanged(float rmsChangedValue) {
-
+        //Log.i(TAG,"chaneg value rms : " + rmsChangedValue);
+        Activity current = MyApp.getCurrentActivity();
+        if( current instanceof ListenerLiveAudioChangeRms){
+            ((ListenerLiveAudioChangeRms)current).onChangeAudioRms(rmsChangedValue);
+        }
     }
 
     @Override
     public void onDroidSpeechLiveResult(String liveSpeechResult) {
+        Log.i(TAG,"live result : " + liveSpeechResult);
+        Activity current = MyApp.getCurrentActivity();
+        if( current instanceof ListenerLiveAudioResult){
+            ((ListenerLiveAudioResult)current).getLiveAudioResult(liveSpeechResult);
+        }
     }
 
     @Override

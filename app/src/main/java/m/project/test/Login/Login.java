@@ -8,7 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import m.project.test.MainActivity;
 import m.project.test.MyApp;
@@ -19,14 +22,16 @@ import m.project.test.Network.UserServer.ResponseUser;
 import m.project.test.Network.UserServer.UserServer;
 import m.project.test.R;
 import m.project.test.Settings.SettingsActivity;
+import m.project.test.SpeechAudio.ListenerLiveAudioResult;
 import m.project.test.User.User;
 
-public class Login extends AppCompatActivity implements ListenerRequestTranslate, ListenerRequestUser {
+public class Login extends AppCompatActivity implements ListenerRequestTranslate, ListenerRequestUser, ListenerLiveAudioResult {
 
 
     public String TAG = "Login";
     EditText usernameText,passwordText;
-
+    Animation animateRotateClockwise;
+    ImageView circleLogo;
 
 
     @Override
@@ -35,7 +40,8 @@ public class Login extends AppCompatActivity implements ListenerRequestTranslate
         setContentView(R.layout.activity_login);
         usernameText = findViewById(R.id.textLoginUsername);
         passwordText = findViewById(R.id.textLoginPassword);
-
+        circleLogo = (ImageView)findViewById(R.id.circle_logo_login);
+        animateRotateClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_clockwise);
 
     }
 
@@ -97,6 +103,7 @@ public class Login extends AppCompatActivity implements ListenerRequestTranslate
 
     @Override
     public void getResultCommand(ResponseTranslate response) {
+        circleLogo.clearAnimation();
         if(response.isError()) return;
         if(response.getCommand().equals("login")){
             UserServer.getInstance().login(usernameText.getText().toString(),passwordText.getText().toString(),this);
@@ -105,6 +112,7 @@ public class Login extends AppCompatActivity implements ListenerRequestTranslate
         }else if(response.getCommand().equals("setting")){
             moveOnSettings();
         }
+
     }
 
     @Override
@@ -125,6 +133,11 @@ public class Login extends AppCompatActivity implements ListenerRequestTranslate
         }
 
 
+    }
 
+    @Override
+    public void getLiveAudioResult(String liveSpeechResult) {
+        if(circleLogo.getAnimation() == null || circleLogo.getAnimation().hasEnded())
+            circleLogo.startAnimation(animateRotateClockwise);
     }
 }
