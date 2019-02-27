@@ -18,6 +18,7 @@ import java.util.Map;
 
 import m.project.test.MyApp;
 import m.project.test.Network.QueueServerRequest;
+import m.project.test.Settings.PreferenceGetter;
 
 public class TranslateServer {
 
@@ -41,7 +42,7 @@ public class TranslateServer {
 
     public void request(String sentence,final ListenerRequestTranslate listener){
 
-        String url = "http://" +IpServer + "/getCommand?text=";
+        String url = "http://" + PreferenceGetter.getValue("server_translate") + "/getCommand?text=";
         try{
             //parse but if error not a problem because we have setup a basic url
             url += URLEncoder.encode(sentence,"utf8");

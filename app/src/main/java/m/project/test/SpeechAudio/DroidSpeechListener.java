@@ -56,6 +56,7 @@ public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListene
 
     @Override
     public void onDroidSpeechFinalResult(String finalSpeechResult) {
+        Log.i(TAG,finalSpeechResult);
         Activity current = MyApp.getCurrentActivity();
         if( current instanceof ListenerRequestTranslate){
             ListenerRequestTranslate currentListener = (ListenerRequestTranslate) current;

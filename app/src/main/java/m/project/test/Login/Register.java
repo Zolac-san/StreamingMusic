@@ -1,6 +1,7 @@
 package m.project.test.Login;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import m.project.test.Network.UserServer.ListenerRequestUser;
 import m.project.test.Network.UserServer.ResponseUser;
 import m.project.test.Network.UserServer.UserServer;
 import m.project.test.R;
+import m.project.test.Settings.SettingsActivity;
 import m.project.test.User.User;
 
 public class Register extends AppCompatActivity implements ListenerRequestTranslate, ListenerRequestUser {
@@ -59,6 +61,16 @@ public class Register extends AppCompatActivity implements ListenerRequestTransl
         finish();
     }
 
+    public void goOnSettings(View view){
+        moveOnSettings();
+    }
+
+    private void moveOnSettings(){
+        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(intent);
+    }
+
+
     @Override
     public void getResultCommand(ResponseTranslate response) {
         if(response.isError()) return;
@@ -67,6 +79,9 @@ public class Register extends AppCompatActivity implements ListenerRequestTransl
         }
         if(response.getCommand().equals("register")){
             UserServer.getInstance().register(usernameText.getText().toString(),passwordText.getText().toString(),this);
+        }
+        if(response.getCommand().equals("setting")){
+            moveOnSettings();
         }
     }
 

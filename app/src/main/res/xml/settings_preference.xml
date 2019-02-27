@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <EditTextPreference
+        android:defaultValue="test"
+        android:key="server_user"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary=""
+        android:title="Server User" />
+    <EditTextPreference
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:defaultValue="10.126.3.139:5111"
+        android:key="server_translate"
+
+        android:singleLine="true"
+        android:summary="http://192.168.162.10"
+        android:title="Server Translate" />
+</PreferenceScreen>

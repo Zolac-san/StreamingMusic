@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.net.URLEncoder;
 
 import m.project.test.Network.QueueServerRequest;
+import m.project.test.Settings.PreferenceGetter;
 
 
 public class UserServer {
@@ -36,7 +37,7 @@ public class UserServer {
 
     public void login(String username, String password ,final ListenerRequestUser listener){
 
-        String url = "http://" +IpServer + "/login?";
+        String url = "http://" + PreferenceGetter.getValue("server_user") + "/login?";
         try{
             //parse but if error not a problem because we have setup a basic url
             url += "username="+URLEncoder.encode(username,"utf8")+"&password="+ URLEncoder.encode(password,"utf8");

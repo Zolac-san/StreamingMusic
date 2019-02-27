@@ -2,6 +2,8 @@ package m.project.test.Login;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +18,7 @@ import m.project.test.Network.UserServer.ListenerRequestUser;
 import m.project.test.Network.UserServer.ResponseUser;
 import m.project.test.Network.UserServer.UserServer;
 import m.project.test.R;
+import m.project.test.Settings.SettingsActivity;
 import m.project.test.User.User;
 
 public class Login extends AppCompatActivity implements ListenerRequestTranslate, ListenerRequestUser {
@@ -24,12 +27,15 @@ public class Login extends AppCompatActivity implements ListenerRequestTranslate
     public String TAG = "Login";
     EditText usernameText,passwordText;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         usernameText = findViewById(R.id.textLoginUsername);
         passwordText = findViewById(R.id.textLoginPassword);
+
 
     }
 
@@ -59,6 +65,7 @@ public class Login extends AppCompatActivity implements ListenerRequestTranslate
     }
 
     public void goOnMainActivity(View view){
+
         moveOnMainActivity();
     }
 
@@ -66,13 +73,25 @@ public class Login extends AppCompatActivity implements ListenerRequestTranslate
         moveOnRegister();
     }
 
+
+
     private void moveOnMainActivity(){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
 
+
     private void moveOnRegister(){
         Intent intent = new Intent(getApplicationContext(), Register.class);
+        startActivity(intent);
+    }
+
+    public void goOnSettings(View view){
+        moveOnSettings();
+    }
+
+    private void moveOnSettings(){
+        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
         startActivity(intent);
     }
 
@@ -83,6 +102,8 @@ public class Login extends AppCompatActivity implements ListenerRequestTranslate
             UserServer.getInstance().login(usernameText.getText().toString(),passwordText.getText().toString(),this);
         }else if(response.getCommand().equals("register")){
             moveOnRegister();
+        }else if(response.getCommand().equals("setting")){
+            moveOnSettings();
         }
     }
 
@@ -102,6 +123,7 @@ public class Login extends AppCompatActivity implements ListenerRequestTranslate
                 // We can display a message
             }
         }
+
 
 
     }

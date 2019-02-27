@@ -1,5 +1,6 @@
 package m.project.test;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -22,6 +23,7 @@ import java.util.Random;
 
 import m.project.test.Network.TranslateServer.ListenerRequestTranslate;
 import m.project.test.Network.TranslateServer.ResponseTranslate;
+import m.project.test.Settings.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity implements ListenerRequestTranslate {
 
@@ -62,7 +64,27 @@ public class MainActivity extends AppCompatActivity implements ListenerRequestTr
             MyApp.setCurrentActivity(null);
     }
 
+    public void goOnSettings(View view){
+        moveOnSettings();
+    }
+
+    private void moveOnSettings(){
+        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(intent);
+    }
+
     public void getResultCommand(ResponseTranslate response){
+        if (response.getCommand().equals("setting")){
+            Log.i(TAG,"it's a setting action");
+            if(!response.isError()) {
+
+
+                moveOnSettings();
+            }else {
+                //error find
+                // We can display a message
+            }
+        }
         resultVoiceText.setText(response.toString());
     }
 }
