@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import m.project.test.MyApp;
 import m.project.test.Network.TranslateServer.ListenerRequestTranslate;
@@ -16,18 +19,26 @@ import m.project.test.Network.UserServer.ResponseUser;
 import m.project.test.Network.UserServer.UserServer;
 import m.project.test.R;
 import m.project.test.Settings.SettingsActivity;
+import m.project.test.SpeechAudio.ListenerLiveAudioResult;
 import m.project.test.User.User;
 
-public class Register extends AppCompatActivity implements ListenerRequestTranslate, ListenerRequestUser {
+public class Register extends AppCompatActivity implements ListenerRequestTranslate, ListenerRequestUser, ListenerLiveAudioResult {
     private String TAG = "Register";
 
     private EditText usernameText, passwordText;
+    Animation animateRotateClockwise,animateRotateCounterClockwise;
+    ImageView circleLogo;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         usernameText = findViewById(R.id.textRegisterUsername);
         passwordText = findViewById(R.id.textRegisterPassword);
+        circleLogo = (ImageView)findViewById(R.id.circle_logo_register);
+        animateRotateClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_clockwise);
+        animateRotateCounterClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_counter_clockwise);
 
     }
 
@@ -73,6 +84,7 @@ public class Register extends AppCompatActivity implements ListenerRequestTransl
 
     @Override
     public void getResultCommand(ResponseTranslate response) {
+        circleLogo.clearAnimation();
         if(response.isError()) return;
         if(response.getCommand().equals("cancel")){
             finish();
@@ -96,5 +108,11 @@ public class Register extends AppCompatActivity implements ListenerRequestTransl
                 // We can display a message
             }
         }
+    }
+
+    @Override
+    public void getLiveAudioResult(String liveSpeechResult) {
+        if(circleLogo.getAnimation() == null || circleLogo.getAnimation().hasEnded())
+            circleLogo.startAnimation(animateRotateCounterClockwise);
     }
 }

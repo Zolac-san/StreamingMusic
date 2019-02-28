@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements ListenerRequestTr
     public final String TAG = "MainActivity";
     private TextView resultVoiceText;
     private Button btnStart,btnStop;
-    Animation animateRotateClockwise;
+    Animation animateRotateClockwise, animateRotateCounterClockwise;
     ImageView circleLogo;
 
     @Override
@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements ListenerRequestTr
         resultVoiceText = findViewById(R.id.ResultVoiceText);
         circleLogo = (ImageView)findViewById(R.id.circle_logo);
         animateRotateClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_clockwise);
+        animateRotateCounterClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_counter_clockwise);
     }
 
     @Override
@@ -90,6 +91,12 @@ public class MainActivity extends AppCompatActivity implements ListenerRequestTr
                 // We can display a message
             }
         }
+        else if (response.getCommand().equals("logout")){
+
+            if(!response.isError()) {
+                finish();
+            }
+        }
         resultVoiceText.setText(response.toString());
         //circleLogo.getAnimation().cancel();
         circleLogo.clearAnimation();
@@ -99,6 +106,6 @@ public class MainActivity extends AppCompatActivity implements ListenerRequestTr
     @Override
     public void getLiveAudioResult(String liveSpeechResult) {
         if(circleLogo.getAnimation() == null || circleLogo.getAnimation().hasEnded())
-            circleLogo.startAnimation(animateRotateClockwise);
+            circleLogo.startAnimation(animateRotateCounterClockwise);
     }
 }

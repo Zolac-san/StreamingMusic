@@ -1,8 +1,11 @@
 package m.project.test.Login;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,7 +33,7 @@ public class Login extends AppCompatActivity implements ListenerRequestTranslate
 
     public String TAG = "Login";
     EditText usernameText,passwordText;
-    Animation animateRotateClockwise;
+    Animation animateRotateClockwise,animateRotateCounterClockwise;
     ImageView circleLogo;
 
 
@@ -42,6 +45,7 @@ public class Login extends AppCompatActivity implements ListenerRequestTranslate
         passwordText = findViewById(R.id.textLoginPassword);
         circleLogo = (ImageView)findViewById(R.id.circle_logo_login);
         animateRotateClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_clockwise);
+        animateRotateCounterClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_counter_clockwise);
 
     }
 
@@ -138,6 +142,6 @@ public class Login extends AppCompatActivity implements ListenerRequestTranslate
     @Override
     public void getLiveAudioResult(String liveSpeechResult) {
         if(circleLogo.getAnimation() == null || circleLogo.getAnimation().hasEnded())
-            circleLogo.startAnimation(animateRotateClockwise);
+            circleLogo.startAnimation(animateRotateCounterClockwise);
     }
 }

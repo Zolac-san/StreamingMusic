@@ -3,6 +3,8 @@ package m.project.test;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.media.AudioManager;
+import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 
@@ -28,20 +30,21 @@ public class MyApp extends Application {
         Log.i(TAG,"Create app");
         super.onCreate();
         MyApp.context = getApplicationContext();
+
         TranslateServer.getInstance(); // For create
         currentActivity= null;
         DroidSpeechListener.getInstance();
-        /*handler = new Handler();
+        handler = new Handler();
         updateData  = new Runnable(){
             public void run(){
                 //call the service here
                 Log.i(TAG,"Reset speech reconizer for no error from android");
                 DroidSpeechListener.getInstance().restart();
                 ////// set the interval time here
-                handler.postDelayed(updateData,20000);
+                handler.postDelayed(updateData,30000);
             }
         };
-        //handler.postDelayed(updateData,20000);*/
+        handler.postDelayed(updateData,30000);
     }
 
     public static Context getAppContext() {

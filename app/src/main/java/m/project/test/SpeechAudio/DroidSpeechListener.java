@@ -1,6 +1,7 @@
 package m.project.test.SpeechAudio;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.util.Log;
 
 import com.vikramezhil.droidspeech.DroidSpeech;
@@ -21,12 +22,17 @@ public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListene
 
     private DroidSpeech droidSpeech;
 
+    private boolean onReset;
+
     private DroidSpeechListener(){
+
         droidSpeech = new DroidSpeech(MyApp.getAppContext(), null);
         droidSpeech.setOnDroidSpeechListener(this);
 
         Log.i(TAG,"Start reco");
         droidSpeech.startDroidSpeechRecognition();
+
+        onReset = false;
     }
 
     public static DroidSpeechListener getInstance(){
@@ -71,6 +77,9 @@ public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListene
             ListenerRequestTranslate currentListener = (ListenerRequestTranslate) current;
             TranslateServer.getInstance().request(finalSpeechResult,currentListener);
         }
+
+        //Obliger du a un bug de l'api google
+        restart();
     }
 
     @Override
@@ -98,8 +107,26 @@ public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListene
     }
 
     public void restart(){
-        stop();
-        launch();
+        if(onReset) return;
+        onReset = true;
+        //stop();
+        //launch();
         //instance = new DroidSpeechListener();
+        droidSpeech.closeDroidSpeechOperations();
+        Handler handler = new Handler();
+        Runnable updateData  = new Runnable(){
+            public void run(){
+                //call the service here
+                Log.i(TAG,"Restart speech");
+                droidSpeech.startDroidSpeechRecognition();
+                onReset = false;
+            }
+        };
+        handler.postDelayed(updateData,4000);
+        //droidSpeech.setPreferredLanguage("fr-FR");
+        //droidSpeech = new DroidSpeech(MyApp.getAppContext(), null);
+        //droidSpeech.setOnDroidSpeechListener(this);
+
+
     }
 }
