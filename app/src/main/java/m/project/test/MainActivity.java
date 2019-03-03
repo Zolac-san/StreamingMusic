@@ -45,6 +45,19 @@ public class MainActivity extends AppCompatActivity implements ListenerRequestTr
         circleLogo = (ImageView)findViewById(R.id.circle_logo);
         animateRotateClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_clockwise);
         animateRotateCounterClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_counter_clockwise);
+        circleLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!MyApp.getCurrentVoiceRecorder().isContinuous()){
+                    if(MyApp.getCurrentVoiceRecorder().isRecording()){
+                        startRecord();
+                    }else{
+                        stopRecord();
+                    }
+                }
+
+            }
+        });
     }
 
     @Override
@@ -107,5 +120,15 @@ public class MainActivity extends AppCompatActivity implements ListenerRequestTr
     public void getLiveAudioResult(String liveSpeechResult) {
         if(circleLogo.getAnimation() == null || circleLogo.getAnimation().hasEnded())
             circleLogo.startAnimation(animateRotateCounterClockwise);
+    }
+
+    public void startRecord(){
+        MyApp.getCurrentVoiceRecorder().startRecord();
+        if(circleLogo.getAnimation() == null || circleLogo.getAnimation().hasEnded())
+            circleLogo.startAnimation(animateRotateCounterClockwise);
+    }
+
+    public void stopRecord(){
+        MyApp.getCurrentVoiceRecorder().stopRecord();
     }
 }

@@ -7,12 +7,14 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import m.project.test.Network.TranslateServer.TranslateServer;
 import m.project.test.SpeechAudio.DroidSpeechListener;
+import m.project.test.SpeechAudio.VoiceRecorder;
 
 public class MyApp extends Application {
     public String TAG = "MyApp";
@@ -20,12 +22,10 @@ public class MyApp extends Application {
 
     private static Activity currentActivity;
 
+    private static VoiceRecorder voiceRecorder;
 
 
 
-    Handler handler ;
-
-    private Runnable updateData;
     public void onCreate() {
         Log.i(TAG,"Create app");
         super.onCreate();
@@ -33,8 +33,10 @@ public class MyApp extends Application {
 
         TranslateServer.getInstance(); // For create
         currentActivity= null;
-        DroidSpeechListener.getInstance();
-        handler = new Handler();
+        voiceRecorder = DroidSpeechListener.getInstance();
+        voiceRecorder.launch();
+
+        /*handler = new Handler();
         updateData  = new Runnable(){
             public void run(){
                 //call the service here
@@ -44,7 +46,7 @@ public class MyApp extends Application {
                 handler.postDelayed(updateData,30000);
             }
         };
-        handler.postDelayed(updateData,30000);
+        handler.postDelayed(updateData,30000);*/
     }
 
     public static Context getAppContext() {
@@ -61,5 +63,11 @@ public class MyApp extends Application {
     public void onClose(){
 
     }
+
+    public static VoiceRecorder getCurrentVoiceRecorder(){
+        return voiceRecorder;
+    }
+
+
 
 }

@@ -14,15 +14,16 @@ import m.project.test.MyApp;
 import m.project.test.Network.TranslateServer.ListenerRequestTranslate;
 import m.project.test.Network.TranslateServer.TranslateServer;
 
-public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListener {
+public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListener, VoiceRecorder {
 
     public final String TAG = "DroidSpeechListener";
-
     private static DroidSpeechListener instance = null;
-
     private DroidSpeech droidSpeech;
-
     private boolean onReset;
+    Handler handler ;
+    private Runnable updateData;
+
+    private boolean recording;
 
     private DroidSpeechListener(){
 
@@ -30,8 +31,8 @@ public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListene
         droidSpeech.setOnDroidSpeechListener(this);
 
         Log.i(TAG,"Start reco");
-        droidSpeech.startDroidSpeechRecognition();
-
+        droidSpeech.closeDroidSpeechOperations();
+        recording = false;
         onReset = false;
     }
 
@@ -62,6 +63,7 @@ public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListene
 
     @Override
     public void onDroidSpeechLiveResult(String liveSpeechResult) {
+        recording = true;
         Log.i(TAG,"live result : " + liveSpeechResult);
         Activity current = MyApp.getCurrentActivity();
         if( current instanceof ListenerLiveAudioResult){
@@ -71,6 +73,7 @@ public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListene
 
     @Override
     public void onDroidSpeechFinalResult(String finalSpeechResult) {
+        recording =false;
         Log.i(TAG,finalSpeechResult);
         Activity current = MyApp.getCurrentActivity();
         if( current instanceof ListenerRequestTranslate){
@@ -99,19 +102,50 @@ public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListene
     }
 
     public void launch(){
+
         droidSpeech.startDroidSpeechRecognition();
+        handler = new Handler();
+        updateData  = new Runnable(){
+            public void run(){
+                //call the service here
+                Log.i(TAG,"Reset speech reconizer for no error from android");
+                restart();
+                ////// set the interval time here
+                handler.postDelayed(updateData,30000);
+            }
+        };
+        handler.postDelayed(updateData,30000);
     }
 
-    public void stop(){
+    public void close(){
+        handler.removeCallbacksAndMessages(null);
         droidSpeech.closeDroidSpeechOperations();
+
+    }
+
+    @Override
+    public void startRecord() {
+
+    }
+
+    @Override
+    public void stopRecord() {
+
+    }
+
+    @Override
+    public boolean isContinuous() {
+        return true;
+    }
+
+    @Override
+    public boolean isRecording() {
+        return false;
     }
 
     public void restart(){
         if(onReset) return;
         onReset = true;
-        //stop();
-        //launch();
-        //instance = new DroidSpeechListener();
         droidSpeech.closeDroidSpeechOperations();
         Handler handler = new Handler();
         Runnable updateData  = new Runnable(){
@@ -123,10 +157,5 @@ public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListene
             }
         };
         handler.postDelayed(updateData,4000);
-        //droidSpeech.setPreferredLanguage("fr-FR");
-        //droidSpeech = new DroidSpeech(MyApp.getAppContext(), null);
-        //droidSpeech.setOnDroidSpeechListener(this);
-
-
     }
 }
