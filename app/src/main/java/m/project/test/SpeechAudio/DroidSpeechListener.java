@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.os.Handler;
 import android.util.Log;
 
-import com.vikramezhil.droidspeech.DroidSpeech;
-import com.vikramezhil.droidspeech.OnDSListener;
-import com.vikramezhil.droidspeech.OnDSPermissionsListener;
+
 
 import java.util.List;
 
@@ -14,11 +12,11 @@ import m.project.test.MyApp;
 import m.project.test.Network.TranslateServer.ListenerRequestTranslate;
 import m.project.test.Network.TranslateServer.TranslateServer;
 
-public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListener, VoiceRecorder {
-
+//public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListener, VoiceRecorder {
+public class DroidSpeechListener{
     public final String TAG = "DroidSpeechListener";
     private static DroidSpeechListener instance = null;
-    private DroidSpeech droidSpeech;
+    //private DroidSpeech droidSpeech;
     private boolean onReset;
     Handler handler ;
     private Runnable updateData;
@@ -27,13 +25,13 @@ public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListene
 
     private DroidSpeechListener(){
 
-        droidSpeech = new DroidSpeech(MyApp.getAppContext(), null);
+        /*droidSpeech = new DroidSpeech(MyApp.getAppContext(), null);
         droidSpeech.setOnDroidSpeechListener(this);
 
         Log.i(TAG,"Start reco");
         droidSpeech.closeDroidSpeechOperations();
         recording = false;
-        onReset = false;
+        onReset = false;*/
     }
 
     public static DroidSpeechListener getInstance(){
@@ -42,7 +40,7 @@ public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListene
         return instance;
     }
 
-    @Override
+    /*@Override
     public void onDroidSpeechSupportedLanguages(String currentSpeechLanguage, List<String> supportedSpeechLanguages) {
         Log.i(TAG, "Current speech language = " + currentSpeechLanguage);
         Log.i(TAG, "Supported speech languages = " + supportedSpeechLanguages.toString());
@@ -82,7 +80,7 @@ public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListene
         }
 
         //Obliger du a un bug de l'api google
-        restart();
+        //restart();
     }
 
     @Override
@@ -102,7 +100,7 @@ public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListene
     }
 
     public void launch(){
-
+        Log.i(TAG,"Launch");
         droidSpeech.startDroidSpeechRecognition();
         handler = new Handler();
         updateData  = new Runnable(){
@@ -157,5 +155,5 @@ public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListene
             }
         };
         handler.postDelayed(updateData,4000);
-    }
+    }*/
 }

@@ -43,7 +43,7 @@ public class Register extends AppCompatActivity implements ListenerRequestTransl
             @Override
             public void onClick(View v) {
                 if(!MyApp.getCurrentVoiceRecorder().isContinuous()){
-                    if(MyApp.getCurrentVoiceRecorder().isRecording()){
+                    if(!MyApp.getCurrentVoiceRecorder().isRecording()){
                         startRecord();
                     }else{
                         stopRecord();

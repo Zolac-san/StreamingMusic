@@ -13,6 +13,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import m.project.test.Network.TranslateServer.TranslateServer;
+import m.project.test.SpeechAudio.AndroidReconizer;
 import m.project.test.SpeechAudio.DroidSpeechListener;
 import m.project.test.SpeechAudio.VoiceRecorder;
 
@@ -33,7 +34,7 @@ public class MyApp extends Application {
 
         TranslateServer.getInstance(); // For create
         currentActivity= null;
-        voiceRecorder = DroidSpeechListener.getInstance();
+        voiceRecorder = AndroidReconizer.getInstance();//DroidSpeechListener.getInstance();
         voiceRecorder.launch();
 
         /*handler = new Handler();

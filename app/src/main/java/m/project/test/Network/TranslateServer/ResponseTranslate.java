@@ -14,14 +14,23 @@ public class ResponseTranslate {
     private String title;
     private ArrayList<String> authors;
     private String album;
+    private String namePlaylist;
+    private String text;
+    private String service;
+    private ArrayList<String> listCommand;
+
 
     public ResponseTranslate() {
         this.error = true;
+        this.text = "";
+        this.service = "";
         this.command = "";
         this.foundMusic = false;
         this.title = "";
         this.authors = new ArrayList<String>();
         this.album = "";
+        this.namePlaylist = "";
+        this.listCommand = new ArrayList<String>();
     }
 
     public ResponseTranslate(boolean error) {
@@ -51,6 +60,14 @@ public class ResponseTranslate {
         this();
         Log.i("Object ", "create via object");
         try {
+            if (obj.has("text")) this.text = (String) obj.get("text");
+            if (obj.has("service")) this.service = (String) obj.get("service");
+            if (obj.has("listCommand")){
+                JSONArray listCommandJSON = obj.getJSONArray("listCommand");
+                for(int i=0; i< listCommandJSON.length();i++ ){
+                    this.listCommand.add( listCommandJSON.getString(i));
+                }
+            }
             if (obj.has("error")) {
                 this.error = (boolean) obj.get("error");
                 if (!this.error && obj.has("command")) {
@@ -67,10 +84,13 @@ public class ResponseTranslate {
                             for(int i=0; i<listAuthors.length();i++ ){
                                 this.addAuthor( listAuthors.getString(i));
                             }
+
+                            this.album = (String) obj.get("album");
                         }
                     }
                 }
             }
+            if (obj.has("namePlaylist")) this.namePlaylist = (String) obj.get("namePlaylist");
             Log.i("Object finish : ",this.toString());
         }catch(Exception e){
             Log.i("Object ", "Error create via object");
@@ -135,15 +155,52 @@ public class ResponseTranslate {
         this.album = album;
     }
 
+
+    public String getNamePlaylist() {
+        return namePlaylist;
+    }
+
+    public void setNamePlaylist(String namePlaylist) {
+        this.namePlaylist = namePlaylist;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getService() {
+        return service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
+    }
+
+    public ArrayList<String> getListCommand() {
+        return listCommand;
+    }
+
+    public void setListCommand(ArrayList<String> listCommand) {
+        this.listCommand = listCommand;
+    }
+
     @Override
     public String toString() {
-        return "ResponseTranslate {" +
+        return "ResponseTranslate{" +
                 "error=" + error +
                 ", command='" + command + '\'' +
                 ", foundMusic=" + foundMusic +
                 ", title='" + title + '\'' +
                 ", authors=" + authors +
                 ", album='" + album + '\'' +
+                ", namePlaylist='" + namePlaylist + '\'' +
+                ", text='" + text + '\'' +
+                ", service='" + service + '\'' +
+                ", listCommand=" + listCommand +
                 '}';
     }
 }

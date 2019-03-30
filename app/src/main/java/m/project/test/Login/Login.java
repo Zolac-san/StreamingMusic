@@ -49,8 +49,10 @@ public class Login extends AppCompatActivity implements ListenerRequestTranslate
         circleLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(!MyApp.getCurrentVoiceRecorder().isContinuous()){
-                    if(MyApp.getCurrentVoiceRecorder().isRecording()){
+
+                    if(!MyApp.getCurrentVoiceRecorder().isRecording()){
                         startRecord();
                     }else{
                         stopRecord();
@@ -159,6 +161,7 @@ public class Login extends AppCompatActivity implements ListenerRequestTranslate
 
 
     public void startRecord(){
+        Log.i("Col","333");
         MyApp.getCurrentVoiceRecorder().startRecord();
         if(circleLogo.getAnimation() == null || circleLogo.getAnimation().hasEnded())
             circleLogo.startAnimation(animateRotateCounterClockwise);

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">test</string>
+
+    <string-array name="listCommand">
+        <item>jouer</item>
+        <item>cancel</item>
+    </string-array>
 </resources>
