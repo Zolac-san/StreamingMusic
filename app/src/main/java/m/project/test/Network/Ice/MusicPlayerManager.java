@@ -12,7 +12,7 @@ import m.project.test.Streaming.PlayerVlc;
 
 public class MusicPlayerManager{
 
-    private String ipMotherServer = "192.168.1.20";
+    private String ipMotherServer = "192.168.1.24";
     private String portMotherServer = "6020";
     private static MusicPlayerManager instance = null;
 
@@ -24,15 +24,15 @@ public class MusicPlayerManager{
 
     }
 
-    public static MusicPlayerManager getIntance(){
+    public static MusicPlayerManager getInstance(){
         if(instance == null)
             instance = new MusicPlayerManager();
         return instance;
     }
 
 
-    public void play(String title,String author,String album){
-        new ClientTask().execute();
+    public void play(String title,String author,String album,ListenerMusicUrl listener){
+        new ClientPlay(listener).execute(title,author,album);
         //return player.play(title,author,album);
         /*Runnable abc = new Runnable(){
 
@@ -78,16 +78,22 @@ public class MusicPlayerManager{
     }
 
 
-    public void stop(String title,String author,String album){
-
-    }
 
 
-    private class ClientTask extends AsyncTask<String, Void, String> {
 
+    private class ClientPlay extends AsyncTask<String, Void, String> {
+
+        private ListenerMusicUrl listener;
+
+        public ClientPlay(ListenerMusicUrl listener){
+            super();
+            this.listener = listener;
+        }
 
         protected String doInBackground(String... params) {
-
+            if(params.length != 3){
+                return "";
+            }
             try (Communicator communicator = Util.initialize()) {
                 ObjectPrx base = communicator.stringToProxy("SimpleMusicManager:default -h "+ipMotherServer+" -p "+portMotherServer);
                 MusicPlayer.PlayerPrx player = MusicPlayer.PlayerPrxHelper.checkedCast(base);
@@ -95,9 +101,10 @@ public class MusicPlayerManager{
                 {
                     throw new Error("Invalid proxy");
                 }
-                String urlStream = player.play("a","a","a");
-                Log.i("HHDHHDHDDHDH",urlStream);
-                PlayerVlc.getInstance().play(urlStream);
+                String urlStream = player.play(params[0],params[1],params[2]);
+                //PlayerVlc.getInstance().load(urlStream);
+                //PlayerVlc.getInstance().play();
+                this.listener.onResultMusicUrl(urlStream);
             }
 
             return "ICE Client AsyncTask finished";

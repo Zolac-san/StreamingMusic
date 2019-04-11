@@ -4,10 +4,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Music {
     String tittle;
-    ArrayList<String> authors;
+    List<String> authors;
     String album;
 
     public Music() {
@@ -16,7 +17,7 @@ public class Music {
         this.album = "";
     }
 
-    public Music(String tittle, ArrayList<String> authors, String album) {
+    public Music(String tittle, List<String> authors, String album) {
         this.tittle = tittle;
         this.authors = authors;
         this.album = album;
@@ -30,7 +31,7 @@ public class Music {
         this.tittle = tittle;
     }
 
-    public ArrayList<String> getAuthors() {
+    public List<String> getAuthors() {
         return authors;
     }
 
@@ -50,7 +51,7 @@ public class Music {
         JSONObject json = new JSONObject ();
         try {
             json.put("title",this.tittle);
-            json.put("authors",this.authors);
+            json.put("authors",this.authorsToString());
             json.put("album",this.album);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -58,13 +59,22 @@ public class Music {
     return json.toString();
     }
 
-    public String authorToString(){
+    public String authorsToString(){
         StringBuilder builder = new StringBuilder();
         for ( String oneAuthor : this.authors){
-            builder.append("|");
+            builder.append(",");
             builder.append(oneAuthor);
 
         }
         return builder.toString().substring(1);
+    }
+
+    @Override
+    public String toString() {
+        return "Music{" +
+                "tittle='" + tittle + '\'' +
+                ", authors=" + authors +
+                ", album='" + album + '\'' +
+                '}';
     }
 }

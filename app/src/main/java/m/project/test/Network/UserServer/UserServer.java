@@ -22,7 +22,7 @@ public class UserServer {
     private static final String TAG = "UserServer";
     private static UserServer instance = null;
 
-    private static final String IpServer = "192.168.137.1:3000";
+    private static final String IpServer = "10.126.3.68:3000";
 
     private RequestQueue requestQueue;
 
@@ -181,6 +181,20 @@ public class UserServer {
             e.printStackTrace();
         }
         makeRequestPost(url,"deleteToPlaylist",params,listener);
+    }
+
+    public void playPlaylist(int id, String namePlaylist,  final ListenerRequestUser listener){
+
+        String url = "http://" + PreferenceGetter.getValue("server_user") + "/playPlaylist";
+        JSONObject params = new JSONObject();
+        try {
+            params.put("name",namePlaylist);
+            params.put("id",id);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        makeRequestPost(url,"playPlaylist",params,listener);
     }
 
 

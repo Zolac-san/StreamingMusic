@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Random;
 
 import m.project.test.Music.Music;
+import m.project.test.Music.Playlist;
+import m.project.test.Network.Ice.ListenerMusicUrl;
 import m.project.test.Network.Ice.MusicPlayerManager;
 import m.project.test.Network.TranslateServer.ListenerRequestTranslate;
 import m.project.test.Network.TranslateServer.ResponseTranslate;
@@ -40,7 +42,9 @@ import m.project.test.SpeechAudio.ListenerLiveAudioResult;
 import m.project.test.Streaming.PlayerVlc;
 import m.project.test.User.User;
 
-public class MainActivity extends AppCompatActivity implements ListenerRequestTranslate, ListenerLiveAudioResult, ListenerRequestUser {
+
+
+public class MainActivity extends AppCompatActivity implements ListenerRequestTranslate, ListenerLiveAudioResult, ListenerRequestUser, ListenerMusicUrl {
 
     public final String TAG = "MainActivity";
     private TextView resultVoiceText;
@@ -73,25 +77,7 @@ public class MainActivity extends AppCompatActivity implements ListenerRequestTr
 
             }
         });
-        /*try {
-            Files.find(Paths.get("/data/user/0/m.project.test/"),
-                    Integer.MAX_VALUE,
-                    (filePath, fileAttr) -> fileAttr.isRegularFile())
-                    .forEach(System.out::println);
 
-        }catch(Exception e){
-
-        }
-        File f = new File(MyApp.getAppContext().getFilesDir().getAbsolutePath()+"/drifters.mp3");
-        Log.i("YYYYYYY","exist : "+f.exists());
-        f = new File("./drifters.mp3");
-        Log.i("YYYYYYY",MyApp.getAppContext().getFilesDir().getAbsolutePath());
-        f = new File("/data/user/0/m.project.test/files");
-        Log.i("YYYYYYY","exist : "+f.listFiles());
-        for(File a : f.listFiles()){
-            Log.i("ddd",a.getAbsolutePath() + "   "+ a.getName());
-        }
-        //PlayerVlc.getInstance().play("drifters.mp3");*/
         music = new Music();
     }
 
@@ -153,21 +139,38 @@ public class MainActivity extends AppCompatActivity implements ListenerRequestTr
             }
         }else if(response.getCommand().equals("jouer")){
             music = new Music(response.getTitle(),response.getAuthors(),response.getAlbum());
-            MusicPlayerManager.getIntance().play(music.getTittle(),music.getAuthors().get(0),music.getAlbum());
+            MusicPlayerManager.getInstance().play(music.getTittle(),music.authorsToString(),music.getAlbum(),this);
+        }else if(response.getCommand().equals("pause")){
+            PlayerVlc.getInstance().pause();
+        }else if(response.getCommand().equals("rejouer")){
+            PlayerVlc.getInstance().replay();
+        }else if(response.getCommand().equals("stop")){
+            PlayerVlc.getInstance().stop();
+        }else if(response.getCommand().equals("continue")){
+            PlayerVlc.getInstance().play();
+        }else if(response.getCommand().equals("nextMusic")){
+            PlayerVlc.getInstance().loadNextMusicPlaylist();
+        }else if(response.getCommand().equals("previousMusic")){
+            PlayerVlc.getInstance().loadPreviousMusicPlaylist();
         }else if(response.getCommand().equals("createPlaylist")){
             UserServer.getInstance().createPlaylist(User.getInstance().getId(),response.getNamePlaylist(),this);
         }else if(response.getCommand().equals("addToPlaylist")){
             UserServer.getInstance().addToPlaylist(User.getInstance().getId(),response.getNamePlaylist(),music,this);
         }else if(response.getCommand().equals("deleteToPlaylist")) {
             UserServer.getInstance().deleteToPlaylist(User.getInstance().getId(), response.getNamePlaylist(), music, this);
+        }else if(response.getCommand().equals("playPlaylist")) {
+            Log.i("Hererere","heheheeheheh");
+            UserServer.getInstance().playPlaylist(User.getInstance().getId(), response.getNamePlaylist(), this);
         }else if(response.getCommand().equals("addCommand")){
             moveOnAddCommand(response.getListCommand());
         }
+
         resultVoiceText.setText(response.toString());
         //circleLogo.getAnimation().cancel();
         circleLogo.clearAnimation();
 
     }
+
 
     @Override
     public void getLiveAudioResult(String liveSpeechResult) {
@@ -181,12 +184,28 @@ public class MainActivity extends AppCompatActivity implements ListenerRequestTr
             circleLogo.startAnimation(animateRotateCounterClockwise);
     }
 
+
+
     public void stopRecord(){
         MyApp.getCurrentVoiceRecorder().stopRecord();
     }
 
     @Override
     public void getResultUser(ResponseUser response) {
+        if(response.getTypeRequest().equals("playPlaylist")){
+            if(response.isError()) return;
+            Playlist playlist = new Playlist(response.getPlayListName());
+            for(Music music : response.getListMusic()){
+                playlist.add(music);
+            }
+            PlayerVlc.getInstance().playPlaylist(playlist);
+        }
+    }
 
+
+    @Override
+    public void onResultMusicUrl(String url) {
+        PlayerVlc.getInstance().load(url);
+        PlayerVlc.getInstance().play();
     }
 }

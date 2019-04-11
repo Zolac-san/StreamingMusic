@@ -26,7 +26,7 @@ public class TranslateServer {
     private static final String TAG = "TranslateServer";
     private static TranslateServer instance = null;
 
-    private static final String IpServer = "192.168.1.22:5111";
+    private static final String IpServer = "10.126.3.68:5111";
 
     private RequestQueue requestQueue;
 

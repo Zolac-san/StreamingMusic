@@ -3,7 +3,14 @@ package m.project.test.Network.UserServer;
 import android.util.Log;
 
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import m.project.test.Music.Music;
 
 public class ResponseUser {
 
@@ -13,6 +20,8 @@ public class ResponseUser {
     private String errorType;
     private String username;
     private int id;
+    private List<Music> listMusic;
+    private String playListName;
 
     public ResponseUser() {
         this.typeRequest = "";
@@ -20,6 +29,8 @@ public class ResponseUser {
         this.errorType = "";
         this.username = "";
         this.id = 0;
+        this.listMusic = new ArrayList<Music>();
+        this.playListName = "";
     }
 
     public ResponseUser(String typeRequest, boolean error) {
@@ -52,7 +63,18 @@ public class ResponseUser {
                 this.username = (String) obj.get("username");
             if (obj.has("id"))
                 this.id = (int) obj.get("id");
-
+            if (obj.has("musics")) {
+                JSONArray allMusics = obj.getJSONArray("musics");
+                for (int i = 0; i < allMusics.length() ; i++) {
+                    JSONObject oneMusic = allMusics.getJSONObject(i);
+                    listMusic.add(new Music(oneMusic.getString("title"), Arrays.asList(oneMusic.getString("authors").split(",")),oneMusic.getString("album")));
+                }
+                //String[] musicString.split(",");
+                Log.i("Music",listMusic.toString());
+            }
+            if(obj.has("playlistName")){
+                this.playListName = obj.getString("playlistName");
+            }
         }catch(Exception e){
             Log.i("Object User", "Error create via object");
             System.err.println("Error on create object : "+ e.getMessage());
@@ -99,6 +121,22 @@ public class ResponseUser {
         this.id = id;
     }
 
+    public List<Music> getListMusic() {
+        return listMusic;
+    }
+
+    public void setListMusic(List<Music> listMusic) {
+        this.listMusic = listMusic;
+    }
+
+    public String getPlayListName() {
+        return playListName;
+    }
+
+    public void setPlayListName(String playListName) {
+        this.playListName = playListName;
+    }
+
     @Override
     public String toString() {
         return "ResponseUser{" +
@@ -107,6 +145,7 @@ public class ResponseUser {
                 ", errorType='" + errorType + '\'' +
                 ", username='" + username + '\'' +
                 ", id=" + id +
+                ", listMusic=" + listMusic +
                 '}';
     }
 }
