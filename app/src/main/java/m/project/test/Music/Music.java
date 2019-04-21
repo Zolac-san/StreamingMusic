@@ -6,59 +6,104 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe representant une musique
+ */
 public class Music {
-    String tittle;
+    String title;
     List<String> authors;
     String album;
 
+    /**
+     * Constructeur
+     */
     public Music() {
-        this.tittle = "";
+        this.title = "";
         this.authors = new ArrayList<String>();
         this.album = "";
     }
 
-    public Music(String tittle, List<String> authors, String album) {
-        this.tittle = tittle;
+    /**
+     * Constructeur
+     * @param title : titre
+     * @param authors : autheurs
+     * @param album : album
+     */
+    public Music(String title, List<String> authors, String album) {
+        this.title = title;
         this.authors = authors;
         this.album = album;
     }
 
-    public String getTittle() {
-        return tittle;
+    /**
+     * Get title
+     * @return title
+     */
+    public String getTitle() {
+        return title;
     }
 
-    public void setTittle(String tittle) {
-        this.tittle = tittle;
+    /**
+     * Set title
+     * @param title
+     */
+    public void setTitle(String title) {
+        this.title = title;
     }
 
+    /**
+     * Get authors
+     * @return authors
+     */
     public List<String> getAuthors() {
         return authors;
     }
 
+    /**
+     * Set authors
+     * @param authors
+     */
     public void setAuthors(ArrayList<String> authors) {
         this.authors = authors;
     }
 
+    /**
+     * Get album
+     * @return album
+     */
     public String getAlbum() {
         return album;
     }
 
+    /**
+     * Set album
+     * @param album
+     */
     public void setAlbum(String album) {
         this.album = album;
     }
 
+    /**
+     * Create a json object of the music
+     * @return json object of music
+     */
     public String toJsonString(){
         JSONObject json = new JSONObject ();
         try {
-            json.put("title",this.tittle);
+            json.put("title",this.title);
             json.put("authors",this.authorsToString());
             json.put("album",this.album);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    return json.toString();
+        return json.toString();
     }
 
+
+    /**
+     * Transform list of authors to string
+     * @return authors in string
+     */
     public String authorsToString(){
         StringBuilder builder = new StringBuilder();
         for ( String oneAuthor : this.authors){
@@ -72,7 +117,7 @@ public class Music {
     @Override
     public String toString() {
         return "Music{" +
-                "tittle='" + tittle + '\'' +
+                "tittle='" + title + '\'' +
                 ", authors=" + authors +
                 ", album='" + album + '\'' +
                 '}';

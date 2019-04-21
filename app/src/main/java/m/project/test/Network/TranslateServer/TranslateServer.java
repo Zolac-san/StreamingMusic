@@ -21,6 +21,9 @@ import m.project.test.Network.QueueServerRequest;
 import m.project.test.Settings.PreferenceGetter;
 import m.project.test.User.User;
 
+/**
+ * Classe pour communiquer avec le serveur de de transformation du texte en commande
+ */
 public class TranslateServer {
 
     private static final String TAG = "TranslateServer";
@@ -30,10 +33,17 @@ public class TranslateServer {
 
     private RequestQueue requestQueue;
 
+    /**
+     * Constructeur
+     */
     private TranslateServer(){
 
     }
 
+    /**
+     * Retourne l'instance
+     * @return instance
+     */
     public static synchronized TranslateServer getInstance()
     {
         if (null == instance)
@@ -41,6 +51,12 @@ public class TranslateServer {
         return instance;
     }
 
+
+    /**
+     * Requete pour transformer une phrase en commande
+     * @param sentence : phrase a traduire
+     * @param listener : activité recevant le resultat
+     */
     public void request(String sentence,final ListenerRequestTranslate listener){
 
         String url = "http://" + PreferenceGetter.getValue("server_translate") + "/getCommand?text=";
@@ -58,6 +74,14 @@ public class TranslateServer {
 
     }
 
+    /**
+     * Requete pour ajouter une commande
+     * @param word
+     * @param command
+     * @param beforeWord
+     * @param afterWord
+     * @param listener : activité recevant la reponse
+     */
     public void addCommandRequest(String word, String command,String beforeWord, String afterWord,final ListenerRequestTranslate listener){
 
         String url = "http://" + PreferenceGetter.getValue("server_translate") + "/addCommand";
@@ -76,6 +100,11 @@ public class TranslateServer {
 
     }
 
+    /**
+     * Effectue une requete de type GET
+     * @param url
+     * @param listener
+     */
     private void makeRequestGet(String url, final ListenerRequestTranslate listener){
         Log.i(TAG,"Start send : "+url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,null,

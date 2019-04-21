@@ -73,21 +73,34 @@ public class Register extends AppCompatActivity implements ListenerRequestTransl
         super.onDestroy();
     }
 
+    /**
+     * Retire l'activite de l'application
+     */
     private void clearReferences(){
         Activity currActivity = MyApp.getCurrentActivity();
         if (this.equals(currActivity))
             MyApp.setCurrentActivity(null);
     }
 
+    /**
+     * Action pour allez sur l'activité d'enregistrement
+     * @param view
+     */
     public void goRegister(View view){
-        Log.i(TAG, "In submit");
         finish();
     }
 
+    /**
+     * Action pour aller sur l'activité des options
+     * @param view
+     */
     public void goOnSettings(View view){
         moveOnSettings();
     }
 
+    /**
+     * Demarre l'activite des options
+     */
     private void moveOnSettings(){
         Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
         startActivity(intent);
@@ -128,12 +141,18 @@ public class Register extends AppCompatActivity implements ListenerRequestTransl
             circleLogo.startAnimation(animateRotateCounterClockwise);
     }
 
+    /**
+     * Demarre la reconnaissance vocale
+     */
     public void startRecord(){
         MyApp.getCurrentVoiceRecorder().startRecord();
         if(circleLogo.getAnimation() == null || circleLogo.getAnimation().hasEnded())
             circleLogo.startAnimation(animateRotateCounterClockwise);
     }
 
+    /**
+     * Arrete la reconnaissance vocale
+     */
     public void stopRecord(){
         MyApp.getCurrentVoiceRecorder().stopRecord();
     }

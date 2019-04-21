@@ -17,6 +17,9 @@ import m.project.test.SpeechAudio.AndroidReconizer;
 import m.project.test.SpeechAudio.DroidSpeechListener;
 import m.project.test.SpeechAudio.VoiceRecorder;
 
+/**
+ * Classe representant l'application
+ */
 public class MyApp extends Application {
     public String TAG = "MyApp";
     private static Context context;
@@ -37,34 +40,43 @@ public class MyApp extends Application {
         voiceRecorder = AndroidReconizer.getInstance();//DroidSpeechListener.getInstance();
         voiceRecorder.launch();
 
-        /*handler = new Handler();
-        updateData  = new Runnable(){
-            public void run(){
-                //call the service here
-                Log.i(TAG,"Reset speech reconizer for no error from android");
-                DroidSpeechListener.getInstance().restart();
-                ////// set the interval time here
-                handler.postDelayed(updateData,30000);
-            }
-        };
-        handler.postDelayed(updateData,30000);*/
     }
 
+    /**
+     * Get app context
+     * @return context
+     */
     public static Context getAppContext() {
         return MyApp.context;
     }
 
+    /**
+     * Get current activity
+     * @return current activity
+     */
     public static Activity getCurrentActivity() {
         return MyApp.currentActivity;
     }
 
+    /**
+     * Set Current activity
+     * @param currentActivity : current activity
+     */
     public static void setCurrentActivity(Activity currentActivity) {
         MyApp.currentActivity = currentActivity;
     }
+
+    /**
+     * Call on close of the application
+     */
     public void onClose(){
 
     }
 
+    /**
+     * Get Current voice recorder
+     * @return
+     */
     public static VoiceRecorder getCurrentVoiceRecorder(){
         return voiceRecorder;
     }

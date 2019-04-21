@@ -10,6 +10,9 @@ import m.project.test.Network.TranslateServer.ListenerRequestTranslate;
 import m.project.test.Network.TranslateServer.ResponseTranslate;
 import m.project.test.R;
 
+/**
+ * Activité Setting
+ */
 public class SettingsActivity extends AppCompatActivity implements ListenerRequestTranslate {
 
     SharedPreferences preferences= null;

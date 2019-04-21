@@ -12,6 +12,9 @@ import java.util.List;
 
 import m.project.test.Music.Music;
 
+/**
+ * Classe représentant la reponse du serveur utilisateur
+ */
 public class ResponseUser {
 
 

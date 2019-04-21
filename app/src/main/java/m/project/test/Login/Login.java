@@ -28,6 +28,9 @@ import m.project.test.Settings.SettingsActivity;
 import m.project.test.SpeechAudio.ListenerLiveAudioResult;
 import m.project.test.User.User;
 
+/**
+ * Activite de connexion
+ */
 public class Login extends AppCompatActivity implements ListenerRequestTranslate, ListenerRequestUser, ListenerLiveAudioResult {
 
 
@@ -82,38 +85,63 @@ public class Login extends AppCompatActivity implements ListenerRequestTranslate
         super.onDestroy();
     }
 
+    /**
+     * Retire l'activité de l'apmlication
+     */
     private void clearReferences(){
         Activity currActivity = MyApp.getCurrentActivity();
         if (this.equals(currActivity))
             MyApp.setCurrentActivity(null);
     }
 
+
+    /**
+     * Action pour aller sur l'activiyé principale
+     * @param view
+     */
     public void goOnMainActivity(View view){
 
         moveOnMainActivity();
     }
 
+
+    /**
+     * Action pour aller sur l'activité d'enregistrement
+     * @param view
+     */
     public void goOnRegister(View view){
         moveOnRegister();
     }
 
 
-
+    /**
+     * Lance l'activité principal
+     */
     private void moveOnMainActivity(){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }
 
-
+    /**
+     * Lance l'activite d'enregistrement
+     */
     private void moveOnRegister(){
         Intent intent = new Intent(getApplicationContext(), Register.class);
         startActivity(intent);
     }
 
+
+    /**
+     * Action pour lancer l'activité des options
+     * @param view
+     */
     public void goOnSettings(View view){
         moveOnSettings();
     }
 
+    /**
+     * Lance l'activité des options
+     */
     private void moveOnSettings(){
         Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
         startActivity(intent);
@@ -153,20 +181,25 @@ public class Login extends AppCompatActivity implements ListenerRequestTranslate
 
     }
 
+
     @Override
     public void getLiveAudioResult(String liveSpeechResult) {
         if(circleLogo.getAnimation() == null || circleLogo.getAnimation().hasEnded())
             circleLogo.startAnimation(animateRotateCounterClockwise);
     }
 
-
+    /**
+     * Commence l'enregistrementaudio
+     */
     public void startRecord(){
-        Log.i("Col","333");
         MyApp.getCurrentVoiceRecorder().startRecord();
         if(circleLogo.getAnimation() == null || circleLogo.getAnimation().hasEnded())
             circleLogo.startAnimation(animateRotateCounterClockwise);
     }
 
+    /**
+     * Stop l'enregistrement audio
+     */
     public void stopRecord(){
         MyApp.getCurrentVoiceRecorder().stopRecord();
     }

@@ -12,6 +12,9 @@ import m.project.test.MyApp;
 import m.project.test.Network.TranslateServer.ListenerRequestTranslate;
 import m.project.test.Network.TranslateServer.TranslateServer;
 
+/**
+ * Classe implementant la reconnaissance audio DroidSpeech
+ */
 //public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListener, VoiceRecorder {
 public class DroidSpeechListener{
     public final String TAG = "DroidSpeechListener";

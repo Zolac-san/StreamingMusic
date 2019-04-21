@@ -17,7 +17,9 @@ import m.project.test.Music.Music;
 import m.project.test.Network.QueueServerRequest;
 import m.project.test.Settings.PreferenceGetter;
 
-
+/**
+ * Classe permettant de communiquer avec le serveur utilisateur
+ */
 public class UserServer {
     private static final String TAG = "UserServer";
     private static UserServer instance = null;
@@ -26,10 +28,17 @@ public class UserServer {
 
     private RequestQueue requestQueue;
 
+    /**
+     * Constructeur
+     */
     private UserServer(){
 
     }
 
+    /**
+     * Recupere l'instance de la classe
+     * @return instance
+     */
     public static synchronized UserServer getInstance()
     {
         if (null == instance)
@@ -37,19 +46,15 @@ public class UserServer {
         return instance;
     }
 
+    /**
+     * Requete pour se connecter
+     * @param username
+     * @param password
+     * @param listener : objet recevant la reponse
+     */
     public void login(String username, String password ,final ListenerRequestUser listener){
 
-        /*String url = "http://" + PreferenceGetter.getValue("server_user") + "/login?";
-        try{
-            //parse but if error not a problem because we have setup a basic url
-            url += "username="+URLEncoder.encode(username,"utf8")+"&password="+ URLEncoder.encode(password,"utf8");
 
-
-        }catch (Exception e){
-            System.err.println("Error parse url");
-        }
-
-        makeRequestGet(url,"login",listener);*/
         String url = "http://" + PreferenceGetter.getValue("server_user") + "/login";
         JSONObject params = new JSONObject();
         try {
@@ -61,21 +66,13 @@ public class UserServer {
         makeRequestPost(url,"login",params,listener);
     }
 
-
+    /**
+     * Requete pour s'enregistrer
+     * @param username
+     * @param password
+     * @param listener : objet recevant lareponse
+     */
     public void register(String username, String password ,final ListenerRequestUser listener){
-        /*
-        String url = "http://" +IpServer + "/register?";
-        try{
-            //parse but if error not a problem because we have setup a basic url
-            url += "username="+URLEncoder.encode(username,"utf8")+"&password="+ URLEncoder.encode(password,"utf8");
-
-
-        }catch (Exception e){
-            System.err.println("Error parse url");
-        }
-
-        makeRequestGet(url,"register",listener);*/
-
         String url = "http://" + PreferenceGetter.getValue("server_user") + "/register";
         JSONObject params = new JSONObject();
         try {
@@ -89,18 +86,14 @@ public class UserServer {
 
     }
 
+    /**
+     * Requete pour creer une playlist
+     * @param id : id de l'utilisateur
+     * @param namePlaylist : nom de la playlist
+     * @param listener : objet recevant la reponse
+     */
     public void createPlaylist(int id,String namePlaylist, final ListenerRequestUser listener){
-        /*String url = "http://" +IpServer + "/createPlaylist?";
-        try{
-            //parse but if error not a problem because we have setup a basic url
-            url += "name="+URLEncoder.encode(namePlaylist,"utf8")+"&id="+ id;
 
-
-        }catch (Exception e){
-            System.err.println("Error parse url");
-        }
-
-        makeRequestGet(url,"createPlaylist",listener);*/
         String url = "http://" + PreferenceGetter.getValue("server_user") + "/createPlaylist";
         JSONObject params = new JSONObject();
         try {
@@ -112,18 +105,14 @@ public class UserServer {
         makeRequestPost(url,"createPlaylist",params,listener);
     }
 
+    /**
+     * Requete pour recupérer une playlist
+     * @param id : id de l'utilisateur
+     * @param namePlaylist : nom de la playlist
+     * @param listener : objet recevant la reponse
+     */
     public void getPlaylist(int id,String namePlaylist, final ListenerRequestUser listener){
-        /*String url = "http://" +IpServer + "/getPlaylist?";
-        try{
-            //parse but if error not a problem because we have setup a basic url
-            url += "name="+URLEncoder.encode(namePlaylist,"utf8")+"&id="+ id;
 
-
-        }catch (Exception e){
-            System.err.println("Error parse url");
-        }
-
-        makeRequestGet(url,"getPlaylist",listener);*/
         String url = "http://" + PreferenceGetter.getValue("server_user") + "/getPlaylist";
         JSONObject params = new JSONObject();
         try {
@@ -135,18 +124,15 @@ public class UserServer {
         makeRequestPost(url,"getPlaylist",params,listener);
     }
 
+    /**
+     * Requete pour ajouter une musique à une playlist
+     * @param id : id de l'utilisateur
+     * @param namePlaylist : nom de la playlist
+     * @param music : musique à ajouter
+     * @param listener : objet recevant la reponse
+     */
     public void addToPlaylist(int id, String namePlaylist, Music music, final ListenerRequestUser listener){
-        /*String url = "http://" +IpServer + "/addToPlaylist?";
-        try{
-            //parse but if error not a problem because we have setup a basic url
-            url += "name="+URLEncoder.encode(namePlaylist,"utf8")+"&id="+ id+"&music="+URLEncoder.encode(music.toJsonString(),"utf8");
 
-
-        }catch (Exception e){
-            System.err.println("Error parse url");
-        }
-
-        makeRequestGet(url,"getPlaylist",listener);*/
         String url = "http://" + PreferenceGetter.getValue("server_user") + "/addToPlaylist";
         JSONObject params = new JSONObject();
         try {
@@ -159,18 +145,15 @@ public class UserServer {
         makeRequestPost(url,"addToPlaylist",params,listener);
     }
 
+    /**
+     * Requete pour supprimer une musique à une playlist
+     * @param id : id de l'utilisateur
+     * @param namePlaylist : nom de la playlist
+     * @param music : musique à supprimer
+     * @param listener : objet recevant la reponse
+     */
     public void deleteToPlaylist(int id, String namePlaylist, Music music, final ListenerRequestUser listener){
-        /*String url = "http://" +IpServer + "/deleteToPlaylist?";
-        try{
-            //parse but if error not a problem because we have setup a basic url
-            url += "name="+URLEncoder.encode(namePlaylist,"utf8")+"&id="+ id+"&music="+music.toJsonString();
 
-
-        }catch (Exception e){
-            System.err.println("Error parse url");
-        }
-
-        makeRequestGet(url,"deleteToPlaylist",listener);*/
         String url = "http://" + PreferenceGetter.getValue("server_user") + "/deleteToPlaylist";
         JSONObject params = new JSONObject();
         try {
@@ -183,6 +166,12 @@ public class UserServer {
         makeRequestPost(url,"deleteToPlaylist",params,listener);
     }
 
+    /**
+     * Requete pour recupérer les musiques d'une playlist
+     * @param id : id de l'utilisateur
+     * @param namePlaylist : nom de la playlist
+     * @param listener : objet recevant la reponse
+     */
     public void playPlaylist(int id, String namePlaylist,  final ListenerRequestUser listener){
 
         String url = "http://" + PreferenceGetter.getValue("server_user") + "/playPlaylist";
@@ -197,7 +186,12 @@ public class UserServer {
         makeRequestPost(url,"playPlaylist",params,listener);
     }
 
-
+    /**
+     * Permet d'effectuer une requete de type GET
+     * @param url
+     * @param typeRequest
+     * @param listener
+     */
     private void makeRequestGet(String url, final String typeRequest, final ListenerRequestUser listener){
         Log.i(TAG,"Start send : "+url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,null,
@@ -221,6 +215,13 @@ public class UserServer {
         QueueServerRequest.getInstance().addRequest(request);
     }
 
+    /**
+     * Permet d'effectuer une requete de type POST
+     * @param url
+     * @param typeRequest
+     * @param params
+     * @param listener
+     */
     private void makeRequestPost(String url, final String typeRequest, final JSONObject params, final ListenerRequestUser listener){
         Log.i(TAG,"Start send : "+url);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url,params,

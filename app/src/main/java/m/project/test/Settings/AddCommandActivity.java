@@ -22,6 +22,9 @@ import m.project.test.Network.TranslateServer.TranslateServer;
 import m.project.test.Network.UserServer.UserServer;
 import m.project.test.R;
 
+/**
+ * Activité d'ajout de commande
+ */
 public class AddCommandActivity extends AppCompatActivity implements ListenerRequestTranslate, AdapterView.OnItemSelectedListener {
 
     public final static String TAG = "AddCommandActivity";
@@ -100,16 +103,27 @@ public class AddCommandActivity extends AppCompatActivity implements ListenerReq
 
     }
 
+    /**
+     * Actionpour ajouter une commande
+     * @param view
+     */
     public void submitAction(View view){
         if(!word.getText().toString().isEmpty() ){
             askServerToAdd();
         }
     }
 
+    /**
+     * Fonction pour demander l'ajout de la fonction
+     */
     private void askServerToAdd(){
         TranslateServer.getInstance().addCommandRequest(word.getText().toString(),listCommand.getSelectedItem().toString() ,beforeWord.getText().toString(),afterWord.getText().toString(),this);
     }
 
+    /**
+     * Actionpour lancer la reconnaisance vocal
+     * @param view
+     */
     public void reconizeAction(View view){
         if(!MyApp.getCurrentVoiceRecorder().isContinuous()){
             if(!MyApp.getCurrentVoiceRecorder().isRecording()){
@@ -166,13 +180,18 @@ public class AddCommandActivity extends AppCompatActivity implements ListenerReq
 
     }
 
+    /**
+     * Lance la reconnaissance vocale
+     */
     public void startRecord(){
-        Log.i("Col","333");
         MyApp.getCurrentVoiceRecorder().startRecord();
         if(circleLogo.getAnimation() == null || circleLogo.getAnimation().hasEnded())
             circleLogo.startAnimation(animateRotateCounterClockwise);
     }
 
+    /**
+     * Arrete la reconnaisance vocale
+     */
     public void stopRecord(){
         MyApp.getCurrentVoiceRecorder().stopRecord();
     }

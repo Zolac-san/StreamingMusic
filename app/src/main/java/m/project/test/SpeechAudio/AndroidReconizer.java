@@ -18,6 +18,10 @@ import m.project.test.Network.TranslateServer.TranslateServer;
 
 import static android.content.ContentValues.TAG;
 
+
+/**
+ * Classe implemntant la reconnaisance vocale d'android
+ */
 public class AndroidReconizer implements VoiceRecorder {
 
     private SpeechRecognizer mSpeechRecognizer;

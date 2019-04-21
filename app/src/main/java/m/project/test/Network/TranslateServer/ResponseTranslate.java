@@ -7,6 +7,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * Classe representant la reponse du serveur qui convertir du texte en commande
+ */
 public class ResponseTranslate {
     private boolean error;
     private String command;
