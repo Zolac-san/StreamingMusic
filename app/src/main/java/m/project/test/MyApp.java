@@ -37,7 +37,8 @@ public class MyApp extends Application {
 
         TranslateServer.getInstance(); // For create
         currentActivity= null;
-        voiceRecorder = AndroidReconizer.getInstance();//DroidSpeechListener.getInstance();
+        voiceRecorder = AndroidReconizer.getInstance();
+        //voiceRecorder = DroidSpeechListener.getInstance();
         voiceRecorder.launch();
 
     }

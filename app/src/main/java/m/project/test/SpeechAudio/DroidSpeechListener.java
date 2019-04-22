@@ -5,6 +5,9 @@ import android.os.Handler;
 import android.util.Log;
 
 
+import com.vikramezhil.droidspeech.DroidSpeech;
+import com.vikramezhil.droidspeech.OnDSListener;
+import com.vikramezhil.droidspeech.OnDSPermissionsListener;
 
 import java.util.List;
 
@@ -15,11 +18,11 @@ import m.project.test.Network.TranslateServer.TranslateServer;
 /**
  * Classe implementant la reconnaissance audio DroidSpeech
  */
-//public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListener, VoiceRecorder {
-public class DroidSpeechListener{
+public class DroidSpeechListener implements OnDSListener, OnDSPermissionsListener, VoiceRecorder {
+//public class DroidSpeechListener{
     public final String TAG = "DroidSpeechListener";
     private static DroidSpeechListener instance = null;
-    //private DroidSpeech droidSpeech;
+    private DroidSpeech droidSpeech;
     private boolean onReset;
     Handler handler ;
     private Runnable updateData;
@@ -28,13 +31,13 @@ public class DroidSpeechListener{
 
     private DroidSpeechListener(){
 
-        /*droidSpeech = new DroidSpeech(MyApp.getAppContext(), null);
+        droidSpeech = new DroidSpeech(MyApp.getAppContext(), null);
         droidSpeech.setOnDroidSpeechListener(this);
 
         Log.i(TAG,"Start reco");
         droidSpeech.closeDroidSpeechOperations();
         recording = false;
-        onReset = false;*/
+        onReset = false;
     }
 
     public static DroidSpeechListener getInstance(){
@@ -43,7 +46,7 @@ public class DroidSpeechListener{
         return instance;
     }
 
-    /*@Override
+    @Override
     public void onDroidSpeechSupportedLanguages(String currentSpeechLanguage, List<String> supportedSpeechLanguages) {
         Log.i(TAG, "Current speech language = " + currentSpeechLanguage);
         Log.i(TAG, "Supported speech languages = " + supportedSpeechLanguages.toString());
@@ -105,7 +108,7 @@ public class DroidSpeechListener{
     public void launch(){
         Log.i(TAG,"Launch");
         droidSpeech.startDroidSpeechRecognition();
-        handler = new Handler();
+        /*handler = new Handler();
         updateData  = new Runnable(){
             public void run(){
                 //call the service here
@@ -115,7 +118,7 @@ public class DroidSpeechListener{
                 handler.postDelayed(updateData,30000);
             }
         };
-        handler.postDelayed(updateData,30000);
+        handler.postDelayed(updateData,30000);*/
     }
 
     public void close(){
@@ -158,5 +161,5 @@ public class DroidSpeechListener{
             }
         };
         handler.postDelayed(updateData,4000);
-    }*/
+    }
 }
