@@ -7,21 +7,6 @@
     tools:context=".Settings.AddCommandActivity"
     android:background="#222222">
 
-    <Button
-        android:id="@+id/addCommandSubmit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:onClick="submitAction"
-        android:text="Submit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/addCommandButtonReconizer"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <EditText
         android:id="@+id/addCommandWord"
         android:layout_width="wrap_content"
@@ -88,22 +73,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addCommandAfterWord"
         />
-
-    <Button
-        android:id="@+id/addCommandButtonReconizer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:onClick="reconizeAction"
-        android:text="Reco"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.765"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/addCommandButtonRemoveTextWord"

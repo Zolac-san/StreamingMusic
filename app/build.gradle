@@ -10,8 +10,8 @@ apply plugin: 'slice'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "m.project.test"
-        minSdkVersion 16
+        applicationId "com.riviere.MusicStreaming"
+        minSdkVersion 17
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"

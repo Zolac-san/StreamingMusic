@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">test</string>
+    <string name="app_name">MusicStreamingProject</string>
 
     <string-array name="listCommand">
         <item>jouer</item>

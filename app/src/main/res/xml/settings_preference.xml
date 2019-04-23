@@ -3,20 +3,23 @@
 
 
     <EditTextPreference
-        android:defaultValue="test"
+        android:defaultValue="0.0.0.0:3000"
         android:key="server_user"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:summary=""
         android:title="Server User" />
     <EditTextPreference
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:defaultValue="10.126.3.139:5111"
+        android:defaultValue="0.0.0.0:5111"
         android:key="server_translate"
-
+        android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:summary="http://192.168.162.10"
         android:title="Server Translate" />
+    <EditTextPreference
+        android:defaultValue="0.0.0.0:6020"
+        android:key="server_streaming"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary=""
+        android:title="Server Streaming" />
 </PreferenceScreen>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="m.project.test">
+    package="com.riviere.MusicStreaming">
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".MyApp"
+        android:name="com.riviere.MusicStreaming.MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,11 +15,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         >
-        <activity android:name=".Settings.AddCommandActivity"
+        <activity android:name="com.riviere.MusicStreaming.Settings.AddCommandActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".Login.Register"
+        <activity android:name="com.riviere.MusicStreaming.Login.Register"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Login.Login"
+        <activity android:name="com.riviere.MusicStreaming.Login.Login"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,10 +27,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
+        <activity android:name="com.riviere.MusicStreaming.MainActivity"
             android:screenOrientation="portrait"
             />
-        <activity android:name=".Settings.SettingsActivity"
+        <activity android:name="com.riviere.MusicStreaming.Settings.SettingsActivity"
             android:screenOrientation="portrait"/>
     </application>
 
